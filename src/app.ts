@@ -1,11 +1,27 @@
 import express from "express";
 
-const app = express();
+class App {
+  public app: express.Application;
+  public port: number | string;
 
-app.use(express.json());
+  constructor(port: number | string) {
+    this.app = express();
+    this.port = port;
 
-app.get("/", (req, res) => {
-  res.send("API is running 🚀");
-});
+    this.initializeRoutes();
+  }
 
-export default app;
+  public initializeRoutes() {
+    this.app.get("/", (req, res) => {
+      res.send("App is running");
+    });
+  }
+
+  public listen() {
+    this.app.listen(this.port, () => {
+      console.log(`Server is running on http://localhost:${this.port}`);
+    });
+  }
+}
+
+export default App;
