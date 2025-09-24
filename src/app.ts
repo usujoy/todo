@@ -1,5 +1,6 @@
 import express from "express";
-
+import TaskController from "./controllers/taskController.js";
+import middlewares from "./middlewares/middlewares.js";
 class App {
   public app: express.Application;
   public port: number | string;
@@ -12,9 +13,10 @@ class App {
   }
 
   public initializeRoutes() {
-    this.app.get("/", (req, res) => {
-      res.send("App is running");
-    });
+    this.app.use(middlewares.requestLogger);
+    this.app.get("/task", TaskController.getAllTasks);
+    this.app.post("/task", express.json(), TaskController.addTask);
+    this.app.get("/task/toComplete", TaskController.getTaskToComplete);
   }
 
   public listen() {
