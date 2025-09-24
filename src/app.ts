@@ -17,6 +17,12 @@ class App {
     this.app.get("/task", TaskController.getAllTasks);
     this.app.post("/task", express.json(), TaskController.addTask);
     this.app.get("/task/toComplete", TaskController.getTaskToComplete);
+    this.app.put("/task/:id", express.json(), TaskController.updateTaskTitle);
+    this.app.put(
+      "/task/:id/completed",
+      express.json(),
+      TaskController.markAsDone
+    );
   }
 
   public listen() {
